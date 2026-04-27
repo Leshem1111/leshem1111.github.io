@@ -1,29 +1,158 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>🎁 Open Me 🎁</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Birthday Mission 🎁</title>
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      color: white;
+      text-align: center;
+      overflow-x: hidden;
+      background: linear-gradient(135deg, #ff4ecd, #7b2cff, #00c2ff);
+      background-size: 300% 300%;
+      animation: bgMove 8s infinite alternate;
+    }
+
+    @keyframes bgMove {
+      from { background-position: left; }
+      to { background-position: right; }
+    }
+
+    .card {
+      max-width: 650px;
+      margin: 60px auto;
+      padding: 30px;
+      border-radius: 28px;
+      background: rgba(0,0,0,0.35);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+    }
+
+    h1 {
+      font-size: 42px;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      font-size: 20px;
+      opacity: 0.95;
+    }
+
+    button {
+      margin-top: 25px;
+      padding: 16px 28px;
+      border: none;
+      border-radius: 999px;
+      font-size: 20px;
+      font-weight: bold;
+      cursor: pointer;
+      background: white;
+      color: #7b2cff;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+      transition: transform 0.2s;
+    }
+
+    button:hover {
+      transform: scale(1.08);
+    }
+
+    #videoBox {
+      display: none;
+      margin-top: 30px;
+    }
+
+    video {
+      width: 100%;
+      max-width: 520px;
+      border-radius: 22px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.45);
+    }
+
+    .confetti {
+      position: fixed;
+      top: -20px;
+      font-size: 28px;
+      animation: fall linear forwards;
+      pointer-events: none;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh) rotate(720deg);
+        opacity: 0;
+      }
+    }
+
+    .secret {
+      margin-top: 20px;
+      font-size: 18px;
+      opacity: 0.9;
+    }
+  </style>
 </head>
 
-<body style="text-align:center; font-family:sans-serif; background:#111; color:white;">
+<body>
+  <div class="card">
+    <h1>🎉 Birthday Mission Unlocked 🎉</h1>
+    <p class="subtitle">You have received a top secret birthday surprise.</p>
+    <p class="subtitle">Press the button when ready 👀</p>
 
-<h1>Happy Birthday 🎉</h1>
-<p>Tap play ▶️</p>
+    <button onclick="startSurprise()">Open the Gift 🎁</button>
 
-<video width="320" controls autoplay>
-  <source src="VIDEO_LINK_HERE" type="video/mp4">
-</video>
+    <div id="videoBox">
+      <p class="secret">Okay okay… here it is 💫</p>
 
-<script>
-fetch("https://discord.com/api/webhooks/1498370136284069908/Wbf77n8ZeJ5c4MK0krLtQ3Cfo27L6JGCSuKVBYvh7K-BS51G3qPYLhNHnOJbtwiWN3Aq", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify({
-    content: "🚨 She just opened the birthday video!"
-  })
-});
-</script>
+      <video controls autoplay playsinline>
+        <source src="VIDEO_LINK_HERE" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </div>
 
+  <script>
+    let opened = false;
+
+    function notifyMe() {
+      fetch("https://discord.com/api/webhooks/1498370136284069908/Wbf77n8ZeJ5c4MK0krLtQ3Cfo27L6JGCSuKVBYvh7K-BS51G3qPYLhNHnOJbtwiWN3Aq", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          content: "🎁 Birthday surprise opened! She pressed the gift button!"
+        })
+      });
+    }
+
+    function startSurprise() {
+      document.getElementById("videoBox").style.display = "block";
+
+      if (!opened) {
+        opened = true;
+        notifyMe();
+      }
+
+      for (let i = 0; i < 80; i++) {
+        setTimeout(createConfetti, i * 25);
+      }
+    }
+
+    function createConfetti() {
+      const emojis = ["🎉", "✨", "🎊", "💖", "🌟", "🎁"];
+      const piece = document.createElement("div");
+
+      piece.className = "confetti";
+      piece.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+      piece.style.left = Math.random() * 100 + "vw";
+      piece.style.animationDuration = (Math.random() * 2 + 2) + "s";
+
+      document.body.appendChild(piece);
+
+      setTimeout(() => {
+        piece.remove();
+      }, 4000);
+    }
+  </script>
 </body>
 </html>
