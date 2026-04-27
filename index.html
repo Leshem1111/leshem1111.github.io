@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>🎁 Open Me 🎁</title>
+</head>
+
+<body style="text-align:center; font-family:sans-serif; background:#111; color:white;">
+
+<h1>Happy Birthday 🎉</h1>
+<p>Tap play ▶️</p>
+
+<video width="320" controls autoplay>
+  <source src="VIDEO_LINK_HERE" type="video/mp4">
+</video>
+
+<script>
+fetch("https://discord.com/api/webhooks/1498370136284069908/Wbf77n8ZeJ5c4MK0krLtQ3Cfo27L6JGCSuKVBYvh7K-BS51G3qPYLhNHnOJbtwiWN3Aq", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    content: "🚨 She just opened the birthday video!"
+  })
+});
+</script>
+
+</body>
+</html>
