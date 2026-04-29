@@ -71,6 +71,25 @@
       box-shadow: 0 15px 40px rgba(0,0,0,0.45);
     }
 
+    #afterMessage {
+      display: none;
+      margin-top: 25px;
+      font-size: 26px;
+      font-weight: bold;
+      animation: popIn 0.6s ease forwards;
+    }
+
+    @keyframes popIn {
+      from {
+        opacity: 0;
+        transform: scale(0.8);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
     .confetti {
       position: fixed;
       top: -20px;
@@ -105,9 +124,11 @@
     <div id="videoBox">
       <p class="secret">Okay okay… here it is 💫</p>
 
-      <video controls autoplay playsinline>
+      <video id="birthdayVideo" controls autoplay playsinline>
         <source src="birthday.mp4" type="video/mp4">
       </video>
+
+      <p id="afterMessage">תסתכלי באינסטגרם...</p>
     </div>
   </div>
 
@@ -152,6 +173,17 @@
         piece.remove();
       }, 4000);
     }
+
+    const video = document.getElementById("birthdayVideo");
+    const afterMessage = document.getElementById("afterMessage");
+
+    video.addEventListener("ended", () => {
+      afterMessage.style.display = "block";
+
+      for (let i = 0; i < 60; i++) {
+        setTimeout(createConfetti, i * 25);
+      }
+    });
   </script>
 </body>
 </html>
