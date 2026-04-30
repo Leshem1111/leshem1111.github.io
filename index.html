@@ -124,7 +124,7 @@
     <div id="videoBox">
       <p class="secret">הנה!!</p>
 
-      <video id="birthdayVideo" controls autoplay playsinline>
+      <video id="birthdayVideo" controls  playsinline>
         <source src="birthday.mp4" type="video/mp4">
       </video>
 
@@ -145,17 +145,20 @@
       });
     }
 
-    function startSurprise() {
-      document.getElementById("videoBox").style.display = "block";
+  function startSurprise() {
+    document.getElementById("videoBox").style.display = "block";
 
-      if (!opened) {
-        opened = true;
-        notifyMe();
-      }
+    const video = document.getElementById("birthdayVideo");
+    video.play(); // ▶️ start video here
 
-      for (let i = 0; i < 80; i++) {
-        setTimeout(createConfetti, i * 25);
-      }
+    if (!opened) {
+      opened = true;
+      notifyMe();
+    }
+
+    for (let i = 0; i < 80; i++) {
+    setTimeout(createConfetti, i * 25);
+    }
     }
 
     function createConfetti() {
